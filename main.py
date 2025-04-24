@@ -18,6 +18,7 @@ from typing import List, Dict, Any, Tuple, Optional
 from object_detection import BagDetector
 from object_tracking import BagTracker
 from counting import LineCounter, RegionCounter
+from config import DETECTION_PARAMS, TRACKING_PARAMS, LINE_COUNTING_PARAMS, REGION_COUNTING_PARAMS, BRIGHT_LIGHTING_PARAMS, SMALL_BAG_PARAMS, LARGE_BAG_PARAMS, FAST_CONVEYOR_PARAMS
 
 
 class CementBagCounter:
@@ -45,13 +46,21 @@ class CementBagCounter:
             show_counter: Whether to show counter visualizations
             show_fps: Whether to show FPS information
         """
+        # Use default parameters from config if none provided
+        if detection_params is None:
+            detection_params = DETECTION_PARAMS
+        if tracking_params is None:
+            tracking_params = TRACKING_PARAMS
+        if counting_params is None:
+            counting_params = LINE_COUNTING_PARAMS if counter_type == 'line' else REGION_COUNTING_PARAMS
+            
         # Initialize components
-        self.detector = BagDetector(**(detection_params or {}))
-        self.tracker = BagTracker(**(tracking_params or {}))
+        self.detector = BagDetector(**detection_params)
+        self.tracker = BagTracker(**tracking_params)
         
         self.counter_type = counter_type
         self.counter = None  # Will be initialized when processing first frame
-        self.counting_params = counting_params or {}
+        self.counting_params = counting_params
         
         # Visualization options
         self.show_detections = show_detections
@@ -480,11 +489,38 @@ def main():
                         help='Configure counting line/region before processing')
     parser.add_argument('-n', '--no-display', action='store_true',
                         help='Do not display video while processing')
+    parser.add_argument('-p', '--param-set', choices=['standard', 'bright', 'small', 'large', 'fast'],
+                        default='standard', help='Parameter set to use (default: standard)')
     
     args = parser.parse_args()
     
+    # Select detection parameters based on conditions
+    if args.param_set == 'bright':
+        detection_params = BRIGHT_LIGHTING_PARAMS
+        tracking_params = TRACKING_PARAMS
+    elif args.param_set == 'small':
+        detection_params = {**DETECTION_PARAMS, **SMALL_BAG_PARAMS}
+        tracking_params = TRACKING_PARAMS
+    elif args.param_set == 'large':
+        detection_params = {**DETECTION_PARAMS, **LARGE_BAG_PARAMS}
+        tracking_params = TRACKING_PARAMS
+    elif args.param_set == 'fast':
+        detection_params = {**DETECTION_PARAMS, **FAST_CONVEYOR_PARAMS}
+        tracking_params = {**TRACKING_PARAMS, **FAST_CONVEYOR_PARAMS}
+    else:  # standard
+        detection_params = DETECTION_PARAMS
+        tracking_params = TRACKING_PARAMS
+        
+    # Select counting parameters based on counter type
+    counting_params = LINE_COUNTING_PARAMS if args.counter_type == 'line' else REGION_COUNTING_PARAMS
+    
     # Create counter
-    counter = CementBagCounter(counter_type=args.counter_type)
+    counter = CementBagCounter(
+        counter_type=args.counter_type,
+        detection_params=detection_params,
+        tracking_params=tracking_params,
+        counting_params=counting_params
+    )
     
     # Configure counting line/region if requested
     if args.configure:

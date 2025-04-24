@@ -247,18 +247,5 @@ This project is provided as a prototype for demonstration purposes.
 
 ### FOR THE USAGE EXAMPLE
 
-# Standard usage with line counter
-python usage_example.py video/video1.mp4 -o output.mp4
-
-# Using region counter instead of line counter
-python usage_example.py video/video1.mp4 -t region -o output.mp4
-
-# For brighter lighting conditions
-python usage_example.py video/video1.mp4 -c bright -o output.mp4
-
-# For smaller bags
-python usage_example.py video/video1.mp4 -c small -o output.mp4
-
-# For faster conveyor belt
-python usage_example.py video/video1.mp4 -c fast -o output.mp4
+python usage.py video/video1.mp4 -d -t region -o video/output1.mp4 
 

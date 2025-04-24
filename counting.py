@@ -11,16 +11,17 @@ or region on a conveyor belt.
 import cv2
 import numpy as np
 from typing import List, Dict, Any, Tuple, Optional
+from config import LINE_COUNTING_PARAMS, REGION_COUNTING_PARAMS
 
 
 class LineCounter:
     """Counts objects crossing a virtual line."""
     
     def __init__(self, 
-                 line_position: Tuple[Tuple[int, int], Tuple[int, int]],
-                 direction: str = 'left-to-right',
-                 min_distance: int = 10,
-                 cooldown_frames: int = 10):
+                 line_position: Tuple[Tuple[int, int], Tuple[int, int]] = LINE_COUNTING_PARAMS['line_position'],
+                 direction: str = LINE_COUNTING_PARAMS['direction'],
+                 min_distance: int = LINE_COUNTING_PARAMS['min_distance'],
+                 cooldown_frames: int = LINE_COUNTING_PARAMS['cooldown_frames']):
         """
         Initialize the line counter with configurable parameters.
         
@@ -236,10 +237,10 @@ class RegionCounter:
     """Counts objects entering and exiting a region of interest."""
     
     def __init__(self, 
-                 region: Tuple[int, int, int, int],
-                 entry_direction: str = 'any',
-                 min_frames_in_region: int = 3,
-                 cooldown_frames: int = 10):
+                 region: Tuple[int, int, int, int] = REGION_COUNTING_PARAMS['region'],
+                 entry_direction: str = REGION_COUNTING_PARAMS['entry_direction'],
+                 min_frames_in_region: int = REGION_COUNTING_PARAMS['min_frames_in_region'],
+                 cooldown_frames: int = REGION_COUNTING_PARAMS['cooldown_frames']):
         """
         Initialize the region counter with configurable parameters.
         

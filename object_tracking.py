@@ -13,6 +13,7 @@ import cv2
 from typing import List, Dict, Any, Tuple, Optional
 from scipy.optimize import linear_sum_assignment
 from filterpy.kalman import KalmanFilter
+from config import TRACKING_PARAMS
 
 
 class KalmanBoxTracker:
@@ -123,9 +124,9 @@ class BagTracker:
     """Cement bag tracker using SORT algorithm."""
     
     def __init__(self, 
-                 max_age: int = 10,
-                 min_hits: int = 3,
-                 iou_threshold: float = 0.3):
+                 max_age: int = TRACKING_PARAMS['max_age'],
+                 min_hits: int = TRACKING_PARAMS['min_hits'],
+                 iou_threshold: float = TRACKING_PARAMS['iou_threshold']):
         """
         Initialize the bag tracker with configurable parameters.
         
