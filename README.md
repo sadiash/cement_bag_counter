@@ -249,3 +249,8 @@ This project is provided as a prototype for demonstration purposes.
 
 python usage.py video/video1.mp4 -d -t region -o video/output1.mp4 
 
+
+### FOR YOLO -- does not detect anything at all!
+
+python deep_learning_detection.py video/video25.mp4
+
