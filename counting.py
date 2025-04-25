@@ -227,7 +227,7 @@ class LineCounter:
                 cv2.arrowedLine(vis_frame, (arrow_x, arrow_y), (arrow_x - 40, arrow_y), (0, 255, 255), 2)
         
         # Draw count
-        cv2.putText(vis_frame, f"Count: {self.count}", (30, 30),
+        cv2.putText(vis_frame, f"Count: {self.count}", (30, 90),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
         
         return vis_frame
@@ -431,7 +431,7 @@ class RegionCounter:
             cv2.arrowedLine(vis_frame, (arrow_x, arrow_y), (arrow_x, arrow_y - 40), (255, 0, 255), 2)
         
         # Draw count
-        cv2.putText(vis_frame, f"Count: {self.count}", (30, 30),
+        cv2.putText(vis_frame, f"Count: {self.count}", (25, 190),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
         
         return vis_frame
