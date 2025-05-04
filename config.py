@@ -11,7 +11,7 @@ and improve region-based counting in the cement bag detection system.
 # Optimized detection parameters for cement bags with motion blur
 # These parameters are specifically tuned for the user's conveyor belt setup
 DETECTION_PARAMS = {
-    'history': 120,           # Shorter history for faster adaptation to changes
+    'history': 10,           # Shorter history for faster adaptation to changes
     'var_threshold': 6,       # Much lower threshold to detect subtle movements
     'detect_shadows': False,  # Turn off shadow detection to improve performance
     'min_area': 3000,         # Reduced to catch smaller/partial bag appearances

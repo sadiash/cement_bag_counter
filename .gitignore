@@ -178,3 +178,8 @@ cython_debug/
 video/
 test_results/
 models/
+deep_learning_detection.py
+pasted_content.txt
+prototype_plan.md
+Readme_old.md
+todo.md
